@@ -73,4 +73,4 @@ for i in range (password_lenth):
 
 print(("Password is"), (password))
 
-
+password=[]
