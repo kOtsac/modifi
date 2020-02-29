@@ -55,8 +55,8 @@ list_of_lists = list(list_of_lists_default)
 
 
 for i in range (password_lenth):
-    focus_list = list_of_lists[(key + focus_count) % lists_count]
-    focus_letter =focus_list[(key + focus_count)% len(focus_list)]
+    focus_list = list_of_lists[(len(str(key))+password_lenth + key + focus_count) % lists_count]
+    focus_letter =focus_list[(password_lenth + key + focus_count)% len(focus_list)]
     focus_count=focus_count+ (focus_list.index(focus_letter))
     password.append(focus_letter)
     list_of_lists.remove(focus_list)
