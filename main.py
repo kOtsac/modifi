@@ -47,6 +47,7 @@ if include_symbols == 1:
 
 
 #ввод ключей
+print("input key(number):")
 key = int(input())
 
 
