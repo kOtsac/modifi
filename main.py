@@ -8,7 +8,7 @@
 
 letters_down = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 letters_up =   ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-numbers = [0,1,2,3,4,5,6,7,8,9]
+numerals = [0,1,2,3,4,5,6,7,8,9]
 symbols = ["!","@","#","$","%","^","&","*","(",")","_","+"]
 list_of_lists = []
 lists_count = 0
@@ -26,7 +26,7 @@ list_of_lists_default = []
 
 include_letters_down = 1
 include_letters_up = 1
-include_numbers = 1
+include_numerals = 1
 include_symbols = 1
 password_lenth = 15
 
@@ -37,8 +37,8 @@ if include_letters_down == 1:
 if include_letters_up == 1:
     list_of_lists_default.append(letters_up)
     lists_default  = lists_default + 1
-if include_numbers == 1:
-    list_of_lists_default.append(numbers)
+if include_numerals == 1:
+    list_of_lists_default.append(numerals)
     lists_default  = lists_default + 1
 if include_symbols == 1:
     list_of_lists_default.append(symbols)
