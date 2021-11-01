@@ -76,6 +76,6 @@ for i in range (password_lenth):
 
 
 
-print(("Password is"), (password))
+print(("Password is"), "".join(password))
 
 password=[]
