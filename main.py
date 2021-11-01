@@ -71,11 +71,8 @@ for i in range (password_lenth):
     if (lists_count == 0):
         lists_count = lists_default
         list_of_lists = list(list_of_lists_default)
-
-
-
-
-
+        
+password = [str(i) for i in password]
 print(("Password is"), "".join(password))
 
 password=[]
