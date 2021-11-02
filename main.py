@@ -47,7 +47,7 @@ if include_symbols == 1:
 #ввод ключей
 print("input key:")
 key = []
-key_input= (input())
+key_input = (input())
 key_list = letters_up + letters_down + numerals + symbols
 
 for i in list(str(key_input)):
