@@ -1,13 +1,10 @@
 import pyperclip as clipboard
-# Прграмма модификации информации
-
-
 # Основные переменные
 
 letters_down = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 letters_up =   ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 numerals = ["0","1","2","3","4","5","6","7","8","9"]
-symbols = ["!","@","#","$","%","^","&","*","(",")","_","+",".",","]
+symbols = ["!","@","#","$","%","^","&","*","(",")","_","-","=","+",".",","]
 list_of_lists = []
 lists_count = 0
 focus_count = 0
@@ -26,7 +23,7 @@ include_letters_down = 1
 include_letters_up = 1
 include_numerals = 1
 include_symbols = 1
-password_lenth = 15
+password_lenth = 16
 
 # добавления списков
 if include_letters_down == 1:
@@ -47,8 +44,9 @@ if include_symbols == 1:
 #ввод ключей
 print("input key:")
 key = []
+key_proto = "kotsac"
 key_input = (input())
-key_list = letters_up + letters_down + numerals + symbols
+key_list = list(key_proto) + letters_up + letters_down + numerals + symbols
 
 for i in list(str(key_input)):
     key.append(str(key_list.index(i)))
@@ -80,4 +78,5 @@ for i in range (password_lenth):
 
 password=("".join(password))
 clipboard.copy(password)
+print(password)
 password=[]
