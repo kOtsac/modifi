@@ -45,7 +45,7 @@ if include_symbols == 1:
 #ввод ключей
 print("input key:")
 key = []
-key_proto = "kotsac"
+key_proto = ""  # первичный ключ для персонализации выводов
 key_input = (input())
 key_list = list(key_proto) + letters_up + letters_down + numerals + symbols
 
