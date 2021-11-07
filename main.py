@@ -1,4 +1,6 @@
-import pyperclip as clipboard
+import keyboard
+import pyautogui as pag
+
 # Основные переменные
 
 letters_down = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
@@ -28,23 +30,22 @@ password_lenth = 16
 # добавления списков
 if include_letters_down == 1:
     list_of_lists_default.append(letters_down)
-    lists_default  = lists_default + 1
+    lists_default = lists_default + 1
 if include_letters_up == 1:
     list_of_lists_default.append(letters_up)
-    lists_default  = lists_default + 1
+    lists_default = lists_default + 1
 if include_numerals == 1:
     list_of_lists_default.append(numerals)
-    lists_default  = lists_default + 1
+    lists_default = lists_default + 1
 if include_symbols == 1:
     list_of_lists_default.append(symbols)
-    lists_default  = lists_default + 1
-
+    lists_default = lists_default + 1
 
 
 #ввод ключей
 print("input key:")
 key = []
-key_proto = ""
+key_proto = "kotsac"
 key_input = (input())
 key_list = list(key_proto) + letters_up + letters_down + numerals + symbols
 
@@ -75,8 +76,24 @@ for i in range (password_lenth):
 
 
 
-
 password=("".join(password))
-clipboard.copy(password)
-print(password)
+if (key_proto != ""):
+    key_proto_print = [key_proto[0],"****",key_proto[-1]]
+    key_proto_print = ("".join(key_proto_print))
+    print("protokey:",key_proto_print)
+print()
+print()
+print()
+print("          ",password)
+print()
+print()
+print()
+print("To insert password press Del")
+def foo():
+
+    pag.typewrite(password)
+
+keyboard.add_hotkey('Del', foo)
+keyboard.wait('Del')
 password=[]
+
