@@ -3,10 +3,10 @@ import pyautogui as pag
 
 # Основные переменные
 
-letters_down = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-letters_up =   ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+letters_down = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+letters_up = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 numerals = ["0","1","2","3","4","5","6","7","8","9"]
-symbols = ["#", "&", ' ', '!', '"', '#', '$', '%', '', "'", '(', ')', '*', '+', ',', '-', '.', '/',':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`','{', '|', '}', '~']
+symbols = ["^", "!", "$", "%", "/", "(", ")", "=", "?", "+", "#", "-", ".", ",", ";", ":", "~", "*", "@", "[", "]", "{", "}", "_", "°", "§"]
 list_of_lists = []
 lists_count = 0
 focus_count = 0
@@ -45,7 +45,7 @@ if include_symbols == 1:
 #ввод ключей
 print("input key:")
 key = []
-key_proto = ""  # первичный ключ для персонализации выводов
+key_proto = "kotsac"  # первичный ключ для персонализации выводов
 key_input = (input())
 key_list = list(key_proto) + letters_up + letters_down + numerals + symbols
 
@@ -94,5 +94,6 @@ def foo():
     pag.typewrite(password)
 
 keyboard.add_hotkey('Del', foo)
+keyboard.wait('Del')
 keyboard.wait('Del')
 password=[]
