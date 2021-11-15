@@ -45,9 +45,12 @@ if include_symbols == 1:
 #ввод ключей
 print("input key:")
 key = []
-key_proto = "kotsac"  # первичный ключ для персонализации выводов
+key_proto = "kotsac.2022"  # первичный ключ для персонализации выводов
 key_input = (input())
-key_list = list(key_proto) + letters_up + letters_down + numerals + symbols
+key_list = letters_up + letters_down + numerals + symbols
+
+for i in list(str(key_proto)):
+    key.append(str(key_list.index(i)))
 
 for i in list(str(key_input)):
     key.append(str(key_list.index(i)))
@@ -61,7 +64,7 @@ list_of_lists = list(list_of_lists_default)
 
 
 for i in range (password_lenth):
-    focus_list = list_of_lists[(len(str(key)) + password_lenth + key + focus_count) % lists_count]
+    focus_list = list_of_lists[(len(str(key)) + password_lenth +key + focus_count) % lists_count]
     focus_letter = focus_list[(password_lenth + key + focus_count) % len(focus_list)]
     focus_count = focus_count + (focus_list.index(focus_letter))
     password.append (focus_letter)
@@ -96,4 +99,5 @@ def foo():
 keyboard.add_hotkey('Del', foo)
 keyboard.wait('Del')
 keyboard.wait('Del')
+
 password=[]
