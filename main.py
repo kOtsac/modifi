@@ -1,103 +1,68 @@
-import keyboard
-import pyautogui as pag
 
-# Основные переменные
+import os
+import hashlib
+import string
+import base64
+from kivymd.app import MDApp
+from kivymd.uix.screen import Screen
+from kivymd.uix.textfield import MDTextField
+from kivymd.uix.button import MDRectangleFlatButton
+from kivymd.uix.label import MDLabel
+import pyperclip
 
-letters_down = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-letters_up = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-numerals = ["0","1","2","3","4","5","6","7","8","9"]
-symbols = ["^", "!", "$", "%", "/", "(", ")", "=", "?", "+", "#", "-", ".", ",", ";", ":", "~", "*", "@", "[", "]", "{", "}", "_", "°", "§"]
-list_of_lists = []
-lists_count = 0
-focus_count = 0
-password = []
-focus_list = []
-focus_letter = []
-lists_default = 0
-list_of_lists_default = []
-key_list = []
+class MainApp(MDApp):
+    def build(self):
+        self.screen = Screen()
+        self.generate_password_screen()
+        return self.screen
 
+    def generate_password_screen(self):
+        self.screen.clear_widgets()
+        if os.path.exists("key_part.txt"):
+            with open('key_part.txt', 'r') as f:
+                self.text_field = f.read()
+            self.input_string = MDTextField(hint_text="Enter input string here", pos_hint={"center_x": 0.5, "center_y": 0.7}, size_hint=(0.6,1))
+            self.output_length = MDTextField(hint_text="Enter output length here", pos_hint={"center_x": 0.5, "center_y": 0.6},size_hint=(0.6,1))
+            self.generate_button = MDRectangleFlatButton(text="Generate", pos_hint={"center_x": 0.5, "center_y": 0.3},
+                                                         on_press=self.generate_password)
 
-
-# Вводимые параметры базы символов
-
-include_letters_down = 1
-include_letters_up = 1
-include_numerals = 1
-include_symbols = 1
-password_lenth = 16
-
-# добавления списков
-if include_letters_down == 1:
-    list_of_lists_default.append(letters_down)
-    lists_default = lists_default + 1
-if include_letters_up == 1:
-    list_of_lists_default.append(letters_up)
-    lists_default = lists_default + 1
-if include_numerals == 1:
-    list_of_lists_default.append(numerals)
-    lists_default = lists_default + 1
-if include_symbols == 1:
-    list_of_lists_default.append(symbols)
-    lists_default = lists_default + 1
+            self.password = MDRectangleFlatButton(text="", font_style="H4", pos_hint={"center_x": 0.5, "center_y": 0.4},)
+            self.screen.add_widget(MDRectangleFlatButton(text="Password Generation", font_style="H4",
+                                           pos_hint={"center_x": 0.5, "center_y": 0.9}))
+            self.screen.add_widget(self.input_string)
+            self.screen.add_widget(self.output_length)
+            self.screen.add_widget(self.generate_button)
+            self.screen.add_widget(self.password)
 
 
-#ввод ключей
-print("input key:")
-key = []
-key_proto = "test.2021"  # первичный ключ для персонализации выводов
-key_input = (input())
-key_list = letters_up + letters_down + numerals + symbols
+        else:
+            self.text_field = MDTextField(hint_text="Enter string here", pos_hint={"center_x": 0.5, "center_y": 0.7}, size_hint=(0.6,1))
+            self.submit_button = MDRectangleFlatButton(text="Submit", pos_hint={"center_x": 0.5, "center_y": 0.5},
+                                                       on_press=self.submit)
+            self.screen.add_widget(self.text_field)
+            self.screen.add_widget(self.submit_button)
+    def submit(self, obj):
+        with open("key_part.txt", "w") as file:
+            file.write(self.text_field.text)
+        self.generate_password_screen()
 
-for i in list(str(key_proto)):
-    key.append(str(key_list.index(i)))
-
-for i in list(str(key_input)):
-    key.append(str(key_list.index(i)))
-key = int("".join(key))
-
-
-# алгоритм программы
-
-lists_count = lists_default
-list_of_lists = list(list_of_lists_default)
-
-
-for i in range (password_lenth):
-    focus_list = list_of_lists[(len(str(key)) + password_lenth +key + focus_count) % lists_count]
-    focus_letter = focus_list[(password_lenth + key + focus_count) % len(focus_list)]
-    focus_count = focus_count + (focus_list.index(focus_letter))
-    password.append (focus_letter)
-    list_of_lists.remove (focus_list)
-    lists_count = lists_count - 1
-
-
-    if (lists_count == 0):
-        lists_count = lists_default
-        list_of_lists = list(list_of_lists_default)
+    def generate_password(self, instance):
+        input_string = self.input_string.text
+        output_length = int(self.output_length.text)
+        input_string += str(output_length)
+        input_string +=str(self.text_field)
+        sha = hashlib.sha256()
+        sha.update(input_string.encode())
+        hash_bytes = sha.digest()
+        hash_base64 = base64.b64encode(hash_bytes)
+        hash_base64 = hash_base64.decode()
+        hash_filtered = ''.join(c for c in hash_base64 if c in (string.ascii_letters + string.digits))
+        hash_filtered = hash_filtered[:output_length]
+        hashed_string = '-'.join(hash_filtered[i:i+4] for i in range(0, len(hash_filtered), 4))
+        self.password.text = hashed_string
+        pyperclip.copy(hashed_string)
 
 
 
 
-password=("".join(password))
-if (key_proto != ""):
-    key_proto_print = [key_proto[0],"****",key_proto[-1]]
-    key_proto_print = ("".join(key_proto_print))
-    print("protokey:",key_proto_print)
-print()
-print()
-print()
-print("          ",password)
-print()
-print()
-print()
-print("To insert password press Del")
-def foo():
-
-    pag.typewrite(password)
-
-keyboard.add_hotkey('Del', foo)
-keyboard.wait('Del')
-keyboard.wait('Del')
-
-password=[]
+MainApp().run()
